@@ -78,6 +78,7 @@ class ApiTest(TestCase):
 
     def test_get_all_items(self):
         self.setup_token()
+
         url = reverse('item-list')
         response = self.api_client.get(url, format='json')
         items = Item.objects.all()
@@ -88,6 +89,7 @@ class ApiTest(TestCase):
 
     def test_get_item(self):
         self.setup_token()
+
         url = reverse('item-detail', kwargs={'pk': 1})
         response = self.api_client.get(url, format='json')
         item = Item.objects.get(pk=1)
@@ -98,6 +100,7 @@ class ApiTest(TestCase):
 
     def test_create_item(self):
         self.setup_token()
+
         url = reverse('item-list')
         payload = {
             'text': self.default_text
@@ -106,3 +109,28 @@ class ApiTest(TestCase):
         response = self.api_client.post(url, payload, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, {'id': 2, 'owner': self.user.username, 'text': self.default_text})
+
+    def test_delete_item(self):
+        self.setup_token()
+
+        item = Item.objects.create(owner=self.user, text=self.default_text)
+        url = reverse('item-detail', kwargs={'pk': item.pk})
+        self.assertEqual(Item.objects.all().count(), 2)
+
+        response = self.api_client.delete(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertRaises(Item.DoesNotExist, Item.objects.get, id=2)
+        self.assertEqual(Item.objects.all().count(), 1)
+
+    def test_update_item(self):
+        self.setup_token()
+
+        item = Item.objects.get(pk=1)
+        self.assertEqual(item.text, self.default_text)
+
+        url = reverse('item-detail', kwargs={'pk': item.pk})
+        new_text = 'new text'
+        response = self.api_client.put(url, {'id': item.pk, 'owner': item.owner.username, 'text': new_text})
+        item = Item.objects.get(pk=1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(item.text, new_text)
