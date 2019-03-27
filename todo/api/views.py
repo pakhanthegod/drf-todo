@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from .models import Item
 from .permissions import IsOwner
 from .serializers import ItemSerializer, UserSerializer
+from .filters import IsOwnerFilterBackend
 
 
 class ItemViewSet(viewsets.ModelViewSet):
@@ -18,6 +19,9 @@ class ItemViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated,
         IsOwner,
     )
+    filter_backends = (
+        IsOwnerFilterBackend,
+    )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -26,7 +30,9 @@ class ItemViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):
         queryset = get_user_model().objects.all()
-        serializer = UserSerializer(queryset, many=True)
+        serializer = UserSerializer(
+            queryset, many=True, context={'request': request}
+        )
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

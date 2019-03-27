@@ -17,6 +17,10 @@ class Login extends Component {
     e.preventDefault();
     const { username, password } = this.state;
     this.authorization(username, password);
+    this.setState({
+      username: '',
+      password: '',
+    });
   };
 
   onChange = (e) => {

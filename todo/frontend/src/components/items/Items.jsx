@@ -1,16 +1,21 @@
 /* eslint-env browser */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-function Items(props) {
-  const { items } = props;
-  const listItems = items.map(item => <li key={item.id}>{item.text}</li>);
-  return (
-    <div>
-      <ul>{listItems}</ul>
-    </div>
-  );
+class Items extends Component {
+  renderList = () => {
+    const { items } = this.props;
+    return items.map(item => <li key={item.id}>{item.text}</li>);
+  };
+
+  render() {
+    return (
+      <div>
+        <ul>{this.renderList()}</ul>
+      </div>
+    );
+  }
 }
 
 Items.propTypes = {

@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import Items from './items/Items';
 import Login from './accounts/Login';
+import Logout from './accounts/Logout';
+import Register from './accounts/Register';
 import Form from './items/Form';
 
 class App extends Component {
@@ -20,14 +22,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.checkToken(localStorage.getItem('access'));
-    this.getItems();
+    if (localStorage.getItem('access') !== null) {
+      if (this.checkToken(localStorage.getItem('access'))) {
+        this.getItems();
+      }
+    }
   }
 
   setSignIn(signIn) {
     this.setState({
       signIn,
     });
+    if (signIn) {
+      this.getItems();
+    } else {
+      this.setState({
+        items: [],
+      });
+    }
   }
 
   getItems() {
@@ -85,7 +97,9 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Register {...this.state} />
         <Login setSignIn={this.setSignIn} />
+        <Logout setSignIn={this.setSignIn} />
         <Items {...this.state} />
         <Form updateItems={this.updateItems} {...this.state} />
       </div>
