@@ -1,7 +1,12 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
+  mode: 'development',
+  entry: path.resolve(__dirname, 'todo/frontend/src/index.jsx'),
+  output: {
+    path: path.resolve(__dirname, 'todo/frontend/static/frontend/'),
+    filename: 'main.js',
+  },
   module: {
     rules: [
       {

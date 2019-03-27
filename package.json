@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "dev": "webpack --mode development ./todo/frontend/src/index.jsx --output ./todo/frontend/static/frontend/main.js",
-    "watch": "webpack --watch ./todo/frontend/src/index.jsx --output ./todo/fronend/static/fronend/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode=development --config webpack.development.config.js",
+    "watch": "webpack --mode=development --config webpack.development.config.js --watch",
     "flow init": "flow init",
     "flow start": "flow start",
     "flow stop": "flow stop",
