@@ -21,10 +21,11 @@ class Form extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const { text } = this.state;
-    const { signIn, updateItems } = this.props;
+    const { signIn, updateItems, items } = this.props;
 
     if (signIn) {
       const token = localStorage.getItem('access');
+
       axios
         .post(
           'http://localhost:8000/api/items/',
@@ -38,7 +39,8 @@ class Form extends Component {
           },
         )
         .then((response) => {
-          updateItems(response.data);
+          items.push(response.data);
+          updateItems(items);
         })
         .catch((error) => {
           console.log(error);
@@ -82,6 +84,7 @@ class Form extends Component {
 Form.propTypes = {
   signIn: PropTypes.bool.isRequired,
   updateItems: PropTypes.func.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Form;

@@ -44,7 +44,6 @@ class App extends Component {
 
   getItems() {
     if (localStorage.getItem('access') !== null) {
-      // if (this.props.checkToken(localStorage.getItem('access'))) {
       const token = localStorage.getItem('access');
 
       axios
@@ -61,7 +60,6 @@ class App extends Component {
         .catch((error) => {
           console.log(error);
         });
-      // }
     }
   }
 
@@ -86,9 +84,7 @@ class App extends Component {
     return true;
   }
 
-  updateItems(item) {
-    const { items } = this.state;
-    items.push(item);
+  updateItems(items) {
     this.setState({
       items,
     });
@@ -100,7 +96,7 @@ class App extends Component {
         <Register {...this.state} />
         <Login setSignIn={this.setSignIn} />
         <Logout setSignIn={this.setSignIn} />
-        <Items {...this.state} />
+        <Items updateItems={this.updateItems} {...this.state} />
         <Form updateItems={this.updateItems} {...this.state} />
       </div>
     );
