@@ -16,7 +16,7 @@ function Logout(props) {
   };
 
   return (
-    <NavLink className="nav-link" onClick={onClick}>
+    <NavLink to="/" className="nav-link" onClick={onClick}>
       Logout
     </NavLink>
   );

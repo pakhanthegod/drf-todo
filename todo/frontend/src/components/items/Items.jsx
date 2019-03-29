@@ -52,10 +52,18 @@ class Items extends Component {
   }
 
   render() {
+    const { signIn } = this.props;
+    if (signIn) {
+      return (
+        <div>
+          <Form {...this.props} />
+          <ul className="offset-md-3 col-md-6 list-group">{this.renderList()}</ul>
+        </div>
+      );
+    }
     return (
-      <div>
-        <Form {...this.props} />
-        <ul className="offset-md-3 col-md-6 list-group">{this.renderList()}</ul>
+      <div className="col mt-4 text-center">
+        <h3>Login to access to a list</h3>
       </div>
     );
   }
@@ -64,6 +72,7 @@ class Items extends Component {
 Items.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   updateItems: PropTypes.func.isRequired,
+  signIn: PropTypes.bool.isRequired,
 };
 
 export default Items;
