@@ -1,13 +1,13 @@
 /* eslint-env browser */
 
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import Items from './items/Items';
 import Login from './accounts/Login';
-import Logout from './accounts/Logout';
 import Register from './accounts/Register';
-import Form from './items/Form';
+import Header from './common/Header';
 
 class App extends Component {
   constructor(props) {
@@ -92,13 +92,18 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Register {...this.state} />
-        <Login setSignIn={this.setSignIn} />
-        <Logout setSignIn={this.setSignIn} />
-        <Items updateItems={this.updateItems} {...this.state} />
-        <Form updateItems={this.updateItems} {...this.state} />
-      </div>
+      <Router>
+        <div>
+          <Header setSignIn={this.setSignIn} {...this.state} />
+          <Route
+            path="/"
+            exact
+            render={() => <Items updateItems={this.updateItems} {...this.state} />}
+          />
+          <Route path="/login" render={() => <Login setSignIn={this.setSignIn} />} />
+          <Route path="/register" render={() => <Register {...this.state} />} />
+        </div>
+      </Router>
     );
   }
 }

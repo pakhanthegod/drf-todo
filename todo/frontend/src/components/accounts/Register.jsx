@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 class Register extends Component {
@@ -11,6 +12,7 @@ class Register extends Component {
       email: '',
       password1: '',
       password2: '',
+      redirect: false,
     };
   }
 
@@ -22,6 +24,7 @@ class Register extends Component {
       email: '',
       password1: '',
       password2: '',
+      redirect: true,
     });
   };
 
@@ -50,12 +53,16 @@ class Register extends Component {
 
   render() {
     const {
-      username, email, password1, password2,
+      username, email, password1, password2, redirect,
     } = this.state;
     const usernameId = 'username';
     const emailId = 'email';
     const password1Id = 'password1';
     const password2Id = 'password2';
+
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <div className="col-md-6 m-auto">

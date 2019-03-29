@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
+import Form from './Form';
+
 class Items extends Component {
   static delete(id) {
     const deleteUrl = `http://localhost:8000/api/items/${id}/`;
@@ -52,6 +54,7 @@ class Items extends Component {
   render() {
     return (
       <div>
+        <Form {...this.props} />
         <ul className="offset-md-3 col-md-6 list-group">{this.renderList()}</ul>
       </div>
     );

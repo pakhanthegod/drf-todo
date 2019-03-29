@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
@@ -10,6 +11,7 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
+      redirect: false,
     };
   }
 
@@ -20,6 +22,7 @@ class Login extends Component {
     this.setState({
       username: '',
       password: '',
+      redirect: true,
     });
   };
 
@@ -45,9 +48,13 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, redirect } = this.state;
     const usernameId = 'username';
     const passwordId = 'password';
+
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <div className="col-md-6 m-auto">

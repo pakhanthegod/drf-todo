@@ -1,6 +1,7 @@
 /* eslint-env browser */
 /* eslint no-unused-vars: ["error", { "args": "none" }] */
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function Logout(props) {
@@ -15,9 +16,9 @@ function Logout(props) {
   };
 
   return (
-    <button type="button" className="btn btn-secondary" onClick={onClick}>
+    <NavLink className="nav-link" onClick={onClick}>
       Logout
-    </button>
+    </NavLink>
   );
 }
 
